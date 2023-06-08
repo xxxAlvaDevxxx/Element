@@ -4,13 +4,12 @@ class Component {
         this.component = document.createElement(tag)
         return this
     }
-    appendFather(father, isComponent = true) {
-        if (isComponent) {
-            father.appendChildren(this)
-        } else {
-            father.appendChild(this.component)
-        }
+    appendFather(father) {
+        father.appendChildren(this)
         return this
+    }
+    appendFatherElement(father){
+        father.appendChild(this.component)
     }
     appendChildren(...children) {
         children.forEach(child => {
@@ -18,13 +17,21 @@ class Component {
         })
         return this
     }
-    createAndAppendFather(tag, father, isComponent) {
+    createAndAppendFather(tag, father) {
         this.create(tag)
-        this.appendFather(father, isComponent)
+        this.appendFather(father)
         return this
     }
     setAttribute(name, value) {
         this.component.setAttribute(name, value)
+        return this
+    }
+    setAttributes(attributes){
+        if (typeof attributes != "object") return Error("objects only");
+        let arr = Object.entries(attributes);
+        arr.forEach(arg=>{
+            this.component.setAttribute(arg[0],arg[1])
+        })
         return this
     }
     setClassNames(...classNames) {
@@ -39,6 +46,10 @@ class Component {
     }
     addTextNode(text) {
         this.component.appendChild(document.createTextNode(text))
+        return this
+    }
+    event(callback) {
+        callback(this.component)
         return this
     }
 };
