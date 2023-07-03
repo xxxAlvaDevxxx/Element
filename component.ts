@@ -1,44 +1,44 @@
 class $ {
-  component;
-  childrenArr = [];
-  constructor(tag, attributes) {
+  component: HTMLElement;
+  childrenArr: $[];
+  constructor(tag:keyof HTMLElementTagNameMap, attributes:object) {
     this.create(tag);
     this.setAttributes(attributes);
   }
-  create(tag) {
+  create(tag:keyof HTMLElementTagNameMap) {
     this.component = document.createElement(tag);
     return this;
   }
-  father(father) {
+  father(father: $) {
     father.children(this);
     return this;
   }
-  fatherElement(father) {
+  fatherElement(father: HTMLElement) {
     father.appendChild(this.component);
     return this;
   }
-  children(...children) {
+  children(...children: $[]) {
     children.forEach((child) => {
       this.component.appendChild(child.getComponent());
       this.childrenArr.push(child);
     });
     return this;
   }
-  removeChildren(...children){
+  removeChildren(...children: $[]){
     children.forEach((child)=>{
       this.component.removeChild(child.getComponent())
     })
   }
-  createAndAppendFather(tag, father) {
+  createAndAppendFather(tag: keyof HTMLElementTagNameMap, father: $) {
     this.create(tag);
-    this.appendFather(father);
+    this.father(father);
     return this;
   }
-  setAttribute(name, value) {
+  setAttribute(name: string, value: string) {
     this.component.setAttribute(name, value);
     return this;
   }
-  setAttributes(attributes) {
+  setAttributes(attributes:object) {
     if (typeof attributes != "object") return Error("objects only");
     let arr = Object.entries(attributes);
     arr.forEach((arg) => {
@@ -46,21 +46,25 @@ class $ {
     });
     return this;
   }
-  setClassNames(...classNames) {
+  setClassNames(...classNames: string[]) {
     this.component.classList.add(...classNames);
     return this;
   }
   find(selector) {
+    this.component = document.querySelector(selector)
+    return this
+  }
+  findChildren(selector) {
     return this.component.querySelector(selector);
   }
   getComponent() {
     return this.component;
   }
-  text(text) {
+  text(text: string) {
     this.component.appendChild(document.createTextNode(text));
     return this;
   }
-  event(callback) {
+  event(callback: (component: HTMLElement) => {}):$ {
     callback(this.component);
     return this;
   }
