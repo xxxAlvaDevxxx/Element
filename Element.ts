@@ -89,6 +89,9 @@ export class $2 {
     });
     return this;
   }
+  setStyle(style){
+    Object.assign(this.element.style, style);
+  }
   setClassNames(...classNames: string[]) {
     if (!this.element) throw Error("element is null");
     this.element.classList.add(...classNames);
