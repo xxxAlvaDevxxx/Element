@@ -23,12 +23,21 @@ export type HTMLInputTypeAttribute =
   | "range"
   | (string & {});
 
+export type styleDeclaration = Partial<CSSStyleDeclaration> & {
+  [propName: string]: string;
+};
+
+type callback = (ctx: $2, e: any) => void;
+type nonBackfn = () => void;
+
 export class $2 {
+  id: string;
   father: $2;
   element: HTMLElement;
   children: Array<$2> = [];
   status = false;
   focus = false;
+  style: styleDeclaration;
   setElement(element: HTMLElement) {
     this.element = element;
     return this;
@@ -67,7 +76,21 @@ export class $2 {
       if (!this.element) throw Error("element is null");
       if (!child.element) throw Error("child is null");
       this.element.removeChild(child.element);
+      const indiceAEliminar = this.children.findIndex(
+        (_child) => _child == child
+      );
+      if (indiceAEliminar !== -1) {
+        // Eliminar el número del array
+        this.children.splice(indiceAEliminar, 1);
+      } else {
+        throw Error("El hijo no está en el array.");
+      }
     });
+    return this;
+  }
+  removeLastChildren() {
+    this.removeChildren(this.children[this.children.length - 1]);
+    return this;
   }
   createAndAppendFather(tag: keyof HTMLElementTagNameMap, father: $2) {
     this.create(tag);
@@ -76,6 +99,7 @@ export class $2 {
   }
   setAttribute(attributes: Attribute) {
     if (!this.element) throw Error("element is null");
+    if (attributes.name == "id") this.id = attributes.value;
     this.element.setAttribute(attributes.name, attributes.value);
     return this;
   }
@@ -89,15 +113,27 @@ export class $2 {
     });
     return this;
   }
-  setStyle(style){
-    Object.assign(this.element.style, style);
+  setStyle(styleObj: styleDeclaration) {
+    // Asigna las propiedades al elemento DOM
+    Object.keys(styleObj).forEach((styleKey: string) => {
+      (this.element.style as styleDeclaration)[styleKey] = styleObj[styleKey];
+    });
+    return this;
   }
   setClassNames(...classNames: string[]) {
     if (!this.element) throw Error("element is null");
     this.element.classList.add(...classNames);
     return this;
   }
-  find(selector: any): $2 {
+  include($2: $2) {
+    let index = this.children.findIndex((_child) => _child == $2);
+    if (index !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  findAndSetElement(selector: any): $2 {
     this.element = document.querySelector(selector);
     if (!this.element) {
       return new $2();
@@ -113,51 +149,56 @@ export class $2 {
     this.element.appendChild(document.createTextNode(text));
     return this;
   }
-  //event(event: any, callback: Function, backfn: Function) {
+  //event(event: any, callback: callback, backfn: callback | nonBackfn) {
   event(
     {
       event,
       callback,
       backfn,
-    }: { event: any; callback: Function; backfn: Function },
+    }: {
+      event: keyof HTMLElementEventMap;
+      callback: callback;
+      backfn: callback | nonBackfn;
+    },
     back: boolean = false
   ) {
     this.element.addEventListener(event, (e) => {
+      if (!e) return;
       if (this.status && back) {
         this.status = false;
-        return backfn();
+        return backfn(this, e);
       }
       this.status = true;
-      return callback(e, this);
+      return callback(this, e);
     });
     return this;
   }
   onClick(
-    { callback, backfn }: { callback: Function; backfn: Function },
+    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
     back: boolean = false
   ) {
     return this.event({ event: "click", callback, backfn }, back);
   }
   onChange(
-    { callback, backfn }: { callback: Function; backfn: Function },
+    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
     back: boolean = false
   ) {
     return this.event({ event: "change", callback, backfn }, back);
   }
   onSumit(
-    { callback, backfn }: { callback: Function; backfn: Function },
+    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
     back: boolean = false
   ) {
     return this.event({ event: "submit", callback, backfn }, back);
   }
   onDblClick(
-    { callback, backfn }: { callback: Function; backfn: Function },
+    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
     back: boolean = false
   ) {
     return this.event({ event: "dblclick", callback, backfn }, back);
   }
   onFocus(
-    { callback, backfn }: { callback: Function; backfn: Function },
+    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
     back: boolean = false
   ) {
     return this.event({ event: "focus", callback, backfn }, back);
@@ -166,7 +207,7 @@ export class $2 {
     this.element.click();
     return this;
   }
-  /* onLoad(callback:Function){
+  /* onLoad(callback:callback){
     console.log(123);
     callback()
     return this
@@ -179,6 +220,10 @@ export class $2 {
     while (this.element.firstChild) {
       this.element.removeChild(this.element.firstChild); // Elimina el primer hijo del elemento padre repetidamente
     }
+  }
+  removeAttr(attribute: string) {
+    this.element.removeAttribute(attribute);
+    return this;
   }
 }
 
@@ -194,45 +239,70 @@ export class $Button extends $ {
   constructor(
     attributes: object,
     text: string,
-    callback: Function,
-    backfn: Function
+    callback: callback,
+    backfn: callback | nonBackfn,
+    back: boolean = false
   ) {
     super("button", attributes);
     this.text(text);
-    this.onClick({ callback, backfn });
+    this.onClick({ callback, backfn }, back);
   }
 }
 
 export class $Input extends $ {
-  type: any;
+  type: HTMLInputTypeAttribute;
   name: string;
   value: any;
+  placeholder: string | undefined;
   constructor(
     {
       type,
       name,
       value,
-    }: { type: HTMLInputTypeAttribute; name: string; value: any },
-    list: string = "",
-    readOnly: boolean = false
+      placeholder,
+      readonly,
+    }: {
+      type: HTMLInputTypeAttribute;
+      name: string;
+      value?: any;
+      placeholder?: string;
+      readonly?: boolean;
+    },
+    list: string = ""
   ) {
     super("input", {
       type,
       name,
-      value,
       list,
     });
     this.type = type;
     this.name = name;
     this.value = value;
-    this.element as HTMLInputElement;
-    if (type == "date" && value != "") this.element.valueAsDate = value;
-    if (readOnly) {
+    this.placeholder = placeholder;
+    if (typeof placeholder == "string")
+      this.element.setAttribute("placeholder", placeholder);
+    if (typeof value == "string") this.setValue(value);
+    if (type == "date" && value != "") {
+      let element = this.element as HTMLInputElement;
+      element.valueAsDate = value;
+    }
+    if (typeof readonly == "boolean") {
       this.readOnly();
     }
+    this.onChange({ callback(ctx, e) {
+      let _ctx = ctx as $Input
+      const { value } = e.target as HTMLInputElement;
+      _ctx.value = value
+    }, backfn() {} });
+  }
+  setValue(value: string) {
+    this.value = value;
+    this.element.setAttribute("value", value);
+    return this;
   }
   readOnly() {
-    this.element.readOnly = true;
+    let element = this.element as HTMLInputElement;
+    element.readOnly = true;
     return this;
   }
 }
@@ -241,10 +311,7 @@ export class $Select extends $ {
   name: string;
   value: any;
   constructor(
-    {
-      name,
-      value,
-    }: { name: string; value: any },
+    { name, value }: { name: string; value: any },
     readOnly: boolean = false
   ) {
     super("select", {
@@ -253,18 +320,18 @@ export class $Select extends $ {
     });
     this.name = name;
     this.value = value;
-    this.element as HTMLInputElement;
     if (readOnly) {
       this.readOnly();
     }
   }
   readOnly() {
-    this.element.readOnly = true;
+    let element = this.element as HTMLInputElement;
+    element.readOnly = true;
     return this;
   }
 }
 
-export class LabelAndInput extends $ {
+export class $LabelAndInput extends $ {
   label: $2;
   input: $Input;
   constructor(
@@ -273,27 +340,32 @@ export class LabelAndInput extends $ {
       name,
       label,
       value,
+      readonly,
     }: {
       type: HTMLInputTypeAttribute;
       name: string;
       label: string;
-      value: any;
+      value?: any;
+      readonly?: boolean;
     },
-    list: string = "",
-    readOnly: boolean = false
+    list: string = ""
   ) {
-    super("div", {});
+    super("div", { id: `container${name}` });
+    if (value == undefined) value = "";
 
     this.label = new $("label", { for: name }).text(label);
-    this.input = new $Input({ type, name, value }, list, readOnly);
+    this.input = new $Input(
+      { type, name, value, placeholder: "", readonly },
+      list
+    );
     this.addChildren(this.label, this.input);
   }
   onChangeInput({
     callback,
     backfn,
   }: {
-    callback: Function;
-    backfn: Function;
+    callback: callback;
+    backfn: callback | nonBackfn;
   }) {
     this.input.onChange({ callback, backfn });
   }
@@ -325,8 +397,8 @@ export class LabelAndSelect extends $ {
     callback,
     backfn,
   }: {
-    callback: Function;
-    backfn: Function;
+    callback: callback;
+    backfn: callback | nonBackfn;
   }) {
     this.select.onChange({ callback, backfn });
   }
