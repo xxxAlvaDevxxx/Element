@@ -1,7 +1,7 @@
-interface Attribute {
+export type Attribute = {
   name: string;
   value: string;
-}
+};
 
 export type HTMLInputTypeAttribute =
   | "number"
@@ -27,22 +27,25 @@ export type styleDeclaration = Partial<CSSStyleDeclaration> & {
   [propName: string]: string;
 };
 
-type callback = (ctx: $2, e: any) => void;
-type nonBackfn = () => void;
+export type CallBack = (ctx: $2, e: any) => void;
+export type nonBackfn = () => void;
 
 export class $2 {
   id: string;
   father: $2;
+  tag: keyof HTMLElementTagNameMap;
   element: HTMLElement;
   children: Array<$2> = [];
   status = false;
   focus = false;
   style: styleDeclaration;
+  text: string;
   setElement(element: HTMLElement) {
     this.element = element;
     return this;
   }
   create(tag: keyof HTMLElementTagNameMap) {
+    this.tag = tag;
     this.element = document.createElement(tag);
     return this;
   }
@@ -114,6 +117,7 @@ export class $2 {
     return this;
   }
   setStyle(styleObj: styleDeclaration) {
+    this.style = styleObj;
     // Asigna las propiedades al elemento DOM
     Object.keys(styleObj).forEach((styleKey: string) => {
       (this.element.style as styleDeclaration)[styleKey] = styleObj[styleKey];
@@ -144,21 +148,22 @@ export class $2 {
     if (!this.element) throw Error("element is null");
     return this.element.querySelector(selector);
   }
-  text(text: string) {
+  setText(text: string) {
     if (!this.element) throw Error("element is null");
+    this.text = text;
     this.element.appendChild(document.createTextNode(text));
     return this;
   }
-  //event(event: any, callback: callback, backfn: callback | nonBackfn) {
+  //event(event: any, callBack: CallBack, backfn: CallBack | nonBackfn) {
   event(
     {
       event,
-      callback,
+      callBack,
       backfn,
     }: {
       event: keyof HTMLElementEventMap;
-      callback: callback;
-      backfn: callback | nonBackfn;
+      callBack: CallBack;
+      backfn: CallBack | nonBackfn;
     },
     back: boolean = false
   ) {
@@ -169,49 +174,48 @@ export class $2 {
         return backfn(this, e);
       }
       this.status = true;
-      return callback(this, e);
+      return callBack(this, e);
     });
     return this;
   }
   onClick(
-    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
+    { callBack, backfn }: { callBack: CallBack; backfn: CallBack | nonBackfn },
     back: boolean = false
   ) {
-    return this.event({ event: "click", callback, backfn }, back);
+    return this.event({ event: "click", callBack, backfn }, back);
   }
   onChange(
-    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
+    { callBack, backfn }: { callBack: CallBack; backfn: CallBack | nonBackfn },
     back: boolean = false
   ) {
-    return this.event({ event: "change", callback, backfn }, back);
+    return this.event({ event: "change", callBack, backfn }, back);
   }
   onSumit(
-    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
+    { callBack, backfn }: { callBack: CallBack; backfn: CallBack | nonBackfn },
     back: boolean = false
   ) {
-    return this.event({ event: "submit", callback, backfn }, back);
+    return this.event({ event: "submit", callBack, backfn }, back);
   }
   onDblClick(
-    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
+    { callBack, backfn }: { callBack: CallBack; backfn: CallBack | nonBackfn },
     back: boolean = false
   ) {
-    return this.event({ event: "dblclick", callback, backfn }, back);
+    return this.event({ event: "dblclick", callBack, backfn }, back);
   }
   onFocus(
-    { callback, backfn }: { callback: callback; backfn: callback | nonBackfn },
+    { callBack, backfn }: { callBack: CallBack; backfn: CallBack | nonBackfn },
     back: boolean = false
   ) {
-    return this.event({ event: "focus", callback, backfn }, back);
+    return this.event({ event: "focus", callBack, backfn }, back);
   }
   click() {
     this.element.click();
     return this;
   }
-  /* onLoad(callback:callback){
+  /* onLoad(callBack:CallBack){
     console.log(123);
-    callback()
     return this
-    //return this.event({event:'load',callback,backfn:()=>{}})
+    //return this.event({event:'load',CallBack,backfn:()=>{}})
   } */
   firstChild() {
     return this.children[0];
@@ -239,13 +243,13 @@ export class $Button extends $ {
   constructor(
     attributes: object,
     text: string,
-    callback: callback,
-    backfn: callback | nonBackfn,
+    callBack: CallBack,
+    backfn: CallBack | nonBackfn,
     back: boolean = false
   ) {
     super("button", attributes);
-    this.text(text);
-    this.onClick({ callback, backfn }, back);
+    this.setText(text);
+    this.onClick({ callBack, backfn }, back);
   }
 }
 
@@ -289,11 +293,14 @@ export class $Input extends $ {
     if (typeof readonly == "boolean") {
       this.readOnly();
     }
-    this.onChange({ callback(ctx, e) {
-      let _ctx = ctx as $Input
-      const { value } = e.target as HTMLInputElement;
-      _ctx.value = value
-    }, backfn() {} });
+    this.onChange({
+      callBack(ctx, e) {
+        let _ctx = ctx as $Input;
+        const { value } = e.target as HTMLInputElement;
+        _ctx.value = value;
+      },
+      backfn() {},
+    });
   }
   setValue(value: string) {
     this.value = value;
@@ -353,7 +360,7 @@ export class $LabelAndInput extends $ {
     super("div", { id: `container${name}` });
     if (value == undefined) value = "";
 
-    this.label = new $("label", { for: name }).text(label);
+    this.label = new $("label", { for: name }).setText(label);
     this.input = new $Input(
       { type, name, value, placeholder: "", readonly },
       list
@@ -361,13 +368,13 @@ export class $LabelAndInput extends $ {
     this.addChildren(this.label, this.input);
   }
   onChangeInput({
-    callback,
+    callBack,
     backfn,
   }: {
-    callback: callback;
-    backfn: callback | nonBackfn;
-  }) {
-    this.input.onChange({ callback, backfn });
+    callBack: CallBack;
+    backfn: CallBack | nonBackfn;
+  },back?:boolean) {
+    this.input.onChange({ callBack, backfn },back);
   }
   //valueToInput(value: any) {}
 }
@@ -389,18 +396,18 @@ export class LabelAndSelect extends $ {
   ) {
     super("div", {});
 
-    this.label = new $("label", { for: name }).text(label);
+    this.label = new $("label", { for: name }).setText(label);
     this.select = new $Select({ name, value }, readOnly);
     this.addChildren(this.label, this.select);
   }
   onChangeSelect({
-    callback,
+    callBack,
     backfn,
   }: {
-    callback: callback;
-    backfn: callback | nonBackfn;
+    callBack: CallBack;
+    backfn: CallBack | nonBackfn;
   }) {
-    this.select.onChange({ callback, backfn });
+    this.select.onChange({ callBack, backfn });
   }
   //valueToSelect(value: any) {}
 }
