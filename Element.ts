@@ -290,7 +290,7 @@ export class $Input extends $ {
       let element = this.element as HTMLInputElement;
       element.valueAsDate = value;
     }
-    if (typeof readonly == "boolean") {
+    if (typeof readonly == "boolean" && readonly == true) {
       this.readOnly();
     }
     this.onChange({
@@ -304,8 +304,55 @@ export class $Input extends $ {
   }
   setValue(value: string) {
     this.value = value;
+    this.element.value = value
     this.element.setAttribute("value", value);
     return this;
+  }
+  readOnly() {
+    let element = this.element as HTMLInputElement;
+    element.readOnly = true;
+    return this;
+  }
+}
+
+export class $Textarea extends $ {
+  name: string;
+  value: any;
+  placeholder: string | undefined;
+  constructor(
+    {
+      name,
+      text,
+      placeholder,
+      readonly,
+    }: {
+      name: string;
+      text?: any;
+      placeholder?: string;
+      readonly?: boolean;
+    },
+    list: string = ""
+  ) {
+    super("textarea", {
+      name,
+      list,
+    });
+    this.name = name;
+    this.placeholder = placeholder;
+    if (typeof placeholder == "string")
+      this.element.setAttribute("placeholder", placeholder);
+    if (typeof text == "string") this.setText(text);
+    if (typeof readonly == "boolean" && readonly == true) {
+      this.readOnly();
+    }
+    this.onChange({
+      callBack(ctx, e) {
+        let _ctx = ctx as $Input;
+        const { value } = e.target as HTMLInputElement;
+        _ctx.text = value;
+      },
+      backfn() {},
+    });
   }
   readOnly() {
     let element = this.element as HTMLInputElement;
@@ -367,14 +414,17 @@ export class $LabelAndInput extends $ {
     );
     this.addChildren(this.label, this.input);
   }
-  onChangeInput({
-    callBack,
-    backfn,
-  }: {
-    callBack: CallBack;
-    backfn: CallBack | nonBackfn;
-  },back?:boolean) {
-    this.input.onChange({ callBack, backfn },back);
+  onChangeInput(
+    {
+      callBack,
+      backfn,
+    }: {
+      callBack: CallBack;
+      backfn: CallBack | nonBackfn;
+    },
+    back?: boolean
+  ) {
+    this.input.onChange({ callBack, backfn }, back);
   }
   //valueToInput(value: any) {}
 }
@@ -410,4 +460,8 @@ export class LabelAndSelect extends $ {
     this.select.onChange({ callBack, backfn });
   }
   //valueToSelect(value: any) {}
+}
+
+export function $Divider() {
+  return new $("span", { class: "divider" });
 }
