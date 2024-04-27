@@ -1,3 +1,4 @@
+// #region types
 export type Attribute = {
   name: string;
   value: string;
@@ -30,6 +31,7 @@ export type styleDeclaration = Partial<CSSStyleDeclaration> & {
 export type CallBack = (ctx: $2, e: any) => void;
 export type nonBackfn = () => void;
 
+// #region Element $2
 export class $2 {
   id: string;
   father: $2;
@@ -40,7 +42,8 @@ export class $2 {
   focus = false;
   style: styleDeclaration;
   text: string;
-  setElement(element: HTMLElement) {
+  setElement(element: HTMLElement | null) {
+    if (!element) throw Error('Element no found')
     this.element = element;
     return this;
   }
@@ -231,6 +234,7 @@ export class $2 {
   }
 }
 
+// #region Element $
 export class $ extends $2 {
   constructor(tag: keyof HTMLElementTagNameMap, attributes: object) {
     super();
@@ -239,6 +243,7 @@ export class $ extends $2 {
   }
 }
 
+// #region $Button
 export class $Button extends $ {
   constructor(
     attributes: object,
@@ -253,6 +258,7 @@ export class $Button extends $ {
   }
 }
 
+// #region $Input
 export class $Input extends $ {
   type: HTMLInputTypeAttribute;
   name: string;
@@ -361,6 +367,7 @@ export class $Textarea extends $ {
   }
 }
 
+// #region $Select
 export class $Select extends $ {
   name: string;
   value: any;
@@ -385,6 +392,7 @@ export class $Select extends $ {
   }
 }
 
+// #region $LabelAndInput
 export class $LabelAndInput extends $ {
   label: $2;
   input: $Input;
@@ -429,6 +437,7 @@ export class $LabelAndInput extends $ {
   //valueToInput(value: any) {}
 }
 
+// #region $LabelAnSelect
 export class LabelAndSelect extends $ {
   label: $2;
   select: $Select;
