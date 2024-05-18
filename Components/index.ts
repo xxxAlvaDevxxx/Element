@@ -1,6 +1,6 @@
 import { $, $2 } from "..";
 import { nonBackfn, HTMLInputTypeAttribute, CallBack } from "../Types";
-
+/*
 // #region $button
 export class $button extends $ {
   constructor(
@@ -244,3 +244,5 @@ export class $article extends $ {
     super("article", attributes);
   }
 }
+
+*/
