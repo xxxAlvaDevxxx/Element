@@ -240,9 +240,53 @@ export function $divider() {
   return new $("span", { class: "divider" });
 }
 
-//#region #article
+//#region $article
 export class $article extends $ {
   constructor(attributes: object = {}) {
     super("article", attributes);
+  }
+}
+
+//#region $h's
+export class $h1 extends $ {
+  constructor(attributes: object = {}) {
+    super("h1", attributes);
+  }
+}
+
+export class $h2 extends $ {
+  constructor(attributes: object = {}) {
+    super("h2", attributes);
+  }
+}
+
+export class $h3 extends $ {
+  constructor(attributes: object = {}) {
+    super("h3", attributes);
+  }
+}
+
+export class $h4 extends $ {
+  constructor(attributes: object = {}) {
+    super("h4", attributes);
+  }
+}
+
+export class $h5 extends $ {
+  constructor(attributes: object = {}){
+    super('h5', attributes);
+  }
+}
+
+export class $h6 extends $ {
+  constructor(attributes: object = {}){
+    super('h6', attributes);
+  }
+}
+
+//#region $divs
+export class $div extends $ {
+  constructor(attributes: object = {}){
+    super('div', attributes);
   }
 }

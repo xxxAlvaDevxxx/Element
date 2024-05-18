@@ -36,10 +36,11 @@ root?.appendChild(App)
 
 ### Element
 ```typescript
-import { $, $2 } from "xxx-element"
-import { $article } from "xxx-element/components"
 
-const HelloWorld = new $("h1", { id: "helloWorld" }).setText("Hello World");
+import { $2 } from "xxx-element"
+import { $article, $h1 } from "xxx-element/components"
+
+const HelloWorld = new $h1({ id: "helloWorld" }).setText("Hello World");
 
 const App = new $article({ id: "App" }).addChild(HelloWorld);
 
@@ -47,6 +48,8 @@ const root = new $2().setElement("#container");
 
 root.addChild(App);
 ```
+
+for more visit the [wiki](https://github.com/xxxAlvaDevxxx/Element/wiki)
 
 ## License
 
