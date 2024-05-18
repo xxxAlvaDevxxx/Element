@@ -22,7 +22,6 @@ export class $input extends $ {
   name: string;
   value: any;
   placeholder: string | undefined;
-  element: any;
   text: string;
   constructor(
     {
@@ -87,7 +86,6 @@ export class $textarea extends $ {
   name: string;
   value: any;
   placeholder: string | undefined;
-  element: any;
   constructor(
     {
       name,
