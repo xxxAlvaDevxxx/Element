@@ -6,7 +6,7 @@ This library is focused on creating components. You will not have DOM rendering 
 
 ## Installation
 
-1. Clone this repository https://github.com/xxxAlvaDevxxx/Element.git.
+    npm install xxx-element
 
 ## Examples
 
