@@ -246,45 +246,54 @@ export class $article extends $ {
 }
 
 //#region $h's
-export class $h1 extends $ {
-  constructor(attributes: object = {}) {
-    super("h1", attributes);
+class $h extends $ {
+  constructor(
+    h: keyof HTMLElementTagNameMap,
+    attributes: object,
+    text: string
+  ) {
+    super(h, attributes);
+  }
+}
+export class $h1 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h1", attributes, text);
   }
 }
 
-export class $h2 extends $ {
-  constructor(attributes: object = {}) {
-    super("h2", attributes);
+export class $h2 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h2", attributes, text);
   }
 }
 
-export class $h3 extends $ {
-  constructor(attributes: object = {}) {
-    super("h3", attributes);
+export class $h3 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h3", attributes, text);
   }
 }
 
-export class $h4 extends $ {
-  constructor(attributes: object = {}) {
-    super("h4", attributes);
+export class $h4 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h4", attributes, text);
   }
 }
 
-export class $h5 extends $ {
-  constructor(attributes: object = {}){
-    super('h5', attributes);
+export class $h5 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h5", attributes, text);
   }
 }
 
-export class $h6 extends $ {
-  constructor(attributes: object = {}){
-    super('h6', attributes);
+export class $h6 extends $h {
+  constructor(text: string, attributes: object = {}) {
+    super("h6", attributes, text);
   }
 }
 
 //#region $divs
 export class $div extends $ {
-  constructor(attributes: object = {}){
-    super('div', attributes);
+  constructor(attributes: object = {}) {
+    super("div", attributes);
   }
 }
