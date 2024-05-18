@@ -1,4 +1,4 @@
-import { StyleDeclaration, Attribute, CallBack, nonBackfn } from "./Types";
+import { StyleDeclaration, Attribute, CallBack, nonBackfn } from "./types";
 
 // #region Element $2
 export class $2 {

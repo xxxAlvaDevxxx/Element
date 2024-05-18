@@ -1,5 +1,5 @@
 import { $, $2 } from "..";
-import { nonBackfn, HTMLInputTypeAttribute, CallBack } from "../Types";
+import { nonBackfn, HTMLInputTypeAttribute, CallBack } from "../types";
 
 // #region $button
 export class $button extends $ {
