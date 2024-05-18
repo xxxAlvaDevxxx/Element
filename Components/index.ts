@@ -253,6 +253,7 @@ class $h extends $ {
     text: string
   ) {
     super(h, attributes);
+    this.setText(text)
   }
 }
 export class $h1 extends $h {
