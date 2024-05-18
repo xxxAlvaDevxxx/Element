@@ -36,11 +36,12 @@ root?.appendChild(App)
 
 ### Element
 ```typescript
-import { $ } from "./Element"
+import { $ } from "xxx-element"
+import { $article } from "xxx-element/Components"
 
 const HelloWorld = new $("h1", { id: "helloWorld" }).setText("Hello World");
 
-const App = new $("article", { id: "App" }).addChild(HelloWorld);
+const App = new $article({ id: "App" }).addChild(HelloWorld);
 
 const root = new $2().setElement("#container");
 
