@@ -36,8 +36,8 @@ root?.appendChild(App)
 
 ### Element
 ```typescript
-import { $ } from "xxx-element"
-import { $article } from "xxx-element/Components"
+import { $, $2 } from "xxx-element"
+import { $article } from "xxx-element/components"
 
 const HelloWorld = new $("h1", { id: "helloWorld" }).setText("Hello World");
 
