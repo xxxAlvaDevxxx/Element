@@ -1,0 +1,12 @@
+{
+  "name": "xxx-element",
+  "version": "1.1.0",
+  "description": "Element is a light library that will help you develop web applications.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "xxxalvadevxxx",
+  "license": "ISC"
+}
