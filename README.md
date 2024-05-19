@@ -40,7 +40,7 @@ root?.appendChild(App)
 import { $2 } from "xxx-element"
 import { $article, $h1 } from "xxx-element/components"
 
-const HelloWorld = new $h1({ id: "helloWorld" }).setText("Hello World");
+const HelloWorld = new $h1("Hello World",{ id: "helloWorld" });
 
 const App = new $article({ id: "App" }).addChild(HelloWorld);
 
