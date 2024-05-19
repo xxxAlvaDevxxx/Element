@@ -245,6 +245,13 @@ export class $article extends $ {
   }
 }
 
+//#region $section
+export class $section extends $ {
+  constructor(attributes: object = {}) {
+    super("section", attributes);
+  }
+}
+
 //#region $h's
 class $h extends $ {
   constructor(
@@ -253,6 +260,7 @@ class $h extends $ {
     text: string
   ) {
     super(h, attributes);
+    this.setText(text);
   }
 }
 export class $h1 extends $h {
