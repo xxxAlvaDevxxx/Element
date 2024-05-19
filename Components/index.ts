@@ -4,10 +4,10 @@ import { nonBackfn, HTMLInputTypeAttribute, CallBack } from "../types";
 // #region $button
 export class $button extends $ {
   constructor(
-    attributes: object,
     text: string,
     callBack: CallBack,
-    backfn: CallBack | nonBackfn,
+    attributes: object = {},
+    backfn: CallBack | nonBackfn = () => {},
     back: boolean = false
   ) {
     super("button", attributes);
