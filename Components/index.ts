@@ -22,7 +22,6 @@ export class $input extends $ {
   name: string;
   value: any;
   placeholder: string | undefined;
-  text: string;
   constructor(
     {
       type,
@@ -196,7 +195,6 @@ export class $labelAndInput extends $ {
   ) {
     this.input.onChange({ callBack, backfn }, back);
   }
-  //valueToInput(value: any) {}
 }
 
 // #region $LabelAnSelect
@@ -230,7 +228,6 @@ export class $labelAndSelect extends $ {
   }) {
     this.select.onChange({ callBack, backfn });
   }
-  //valueToSelect(value: any) {}
 }
 
 //#region $divider
