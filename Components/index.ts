@@ -7,6 +7,7 @@ import { $labelAndSelect } from "./labelAndSelect";
 import $select from "./select";
 import $option from "./option";
 import $textarea from "./textarea";
+import { $TagText } from "../types";
 
 export {
   $button,
@@ -43,5 +44,11 @@ export { $h1, $h2, $h3, $h4, $h5, $h6 };
 export class $div extends $ {
   constructor(attributes: object = {}) {
     super("div", attributes);
+  }
+}
+
+export class $p extends $TagText {
+  constructor(text: string, attributes: object = {}) {
+    super("p", attributes, text);
   }
 }

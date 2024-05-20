@@ -1,4 +1,4 @@
-import { $2 } from "..";
+import { $, $2 } from "..";
 
 // #region types
 export type Attribute = {
@@ -32,3 +32,14 @@ export type StyleDeclaration = Partial<CSSStyleDeclaration> & {
 
 export type CallBack = (ctx: $2, e: any) => void;
 export type nonBackfn = () => void;
+
+export class $TagText extends $ {
+  constructor(
+    tag: keyof HTMLElementTagNameMap,
+    attributes: object,
+    text: string
+  ) {
+    super(tag, attributes);
+    this.setText(text);
+  }
+}
