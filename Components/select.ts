@@ -4,7 +4,6 @@ import { $ } from "..";
 export default class $select extends $ {
     name: string;
     value: any;
-    element: HTMLInputElement;
     constructor(
       { name, value }: { name: string; value: any },
       readOnly: boolean = false
