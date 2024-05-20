@@ -5,9 +5,18 @@ import $input from "./input";
 import $labelAndInput from "./labelAndInput";
 import { $labelAndSelect } from "./labelAndSelect";
 import $select from "./select";
+import $option from "./option";
 import $textarea from "./textarea";
 
-export { $button, $input, $textarea, $select, $labelAndInput, $labelAndSelect };
+export {
+  $button,
+  $input,
+  $textarea,
+  $select,
+  $option,
+  $labelAndInput,
+  $labelAndSelect,
+};
 
 //#region $divider
 export function $divider() {
