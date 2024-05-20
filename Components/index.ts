@@ -52,3 +52,21 @@ export class $p extends $TagText {
     super("p", attributes, text);
   }
 }
+
+export class $header extends $ {
+  constructor(attributes: object = {}) {
+    super("header", attributes);
+  }
+}
+
+export class $footer extends $ {
+  constructor(attributes: object = {}) {
+    super("footer", attributes);
+  }
+}
+
+export class $main extends $ {
+  constructor(attributes: object = {}) {
+    super("main", attributes);
+  }
+}
