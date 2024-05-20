@@ -59,6 +59,13 @@ export class $a extends $TagText {
   }
 }
 
+export class $img extends $ {
+  constructor(src: string, attributes: object = {}) {
+    super("img", attributes);
+    this.setAttribute({ name: "src", value: src });
+  }
+}
+
 export class $header extends $ {
   constructor(attributes: object = {}) {
     super("header", attributes);
