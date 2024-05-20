@@ -53,6 +53,12 @@ export class $p extends $TagText {
   }
 }
 
+export class $a extends $TagText {
+  constructor(text: string, attributes: object = {}) {
+    super("a", attributes, text);
+  }
+}
+
 export class $header extends $ {
   constructor(attributes: object = {}) {
     super("header", attributes);
