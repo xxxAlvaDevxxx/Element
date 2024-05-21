@@ -73,6 +73,30 @@ export class $datalist extends $ {
   }
 }
 
+export class $nav extends $ {
+  constructor(attributes: object = {}){
+    super('nav', attributes);
+  }
+}
+
+export class $ul extends $ {
+  constructor(attributes: object = {}){
+    super('ul', attributes);
+  }
+}
+
+export class $li extends $ {
+  constructor(attributes: object = {}){
+    super('li', attributes);
+  }
+}
+
+export class $ol extends $ {
+  constructor(attributes: object = {}){
+    super('ol', attributes);
+  }
+}
+
 export class $img extends $ {
   constructor(src: string, attributes: object = {}) {
     super("img", attributes);
