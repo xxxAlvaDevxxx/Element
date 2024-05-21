@@ -59,6 +59,20 @@ export class $a extends $TagText {
   }
 }
 
+export class $datalist extends $ {
+  constructor(attributes: object = {}) {
+    super("datalist", attributes);
+  }
+  addOption(value: string) {
+    this.addChild(new $option(value, { value: value }));
+  }
+  setOptions(...values: Array<string>) {
+    values.forEach((value) => {
+      this.addOption(value);
+    });
+  }
+}
+
 export class $img extends $ {
   constructor(src: string, attributes: object = {}) {
     super("img", attributes);
