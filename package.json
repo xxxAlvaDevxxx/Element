@@ -1,6 +1,6 @@
 {
   "name": "xxx-element",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Element is a light library that will help you develop web applications.",
   "main": "index.ts",
   "scripts": {
