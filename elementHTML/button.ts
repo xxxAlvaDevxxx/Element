@@ -2,7 +2,7 @@ import { $ } from "..";
 import { CallBack, nonBackfn } from "../types";
 
 // #region $button
-export class $button extends $ {
+export default class $button extends $ {
   constructor(
     text: string,
     callBack: CallBack,

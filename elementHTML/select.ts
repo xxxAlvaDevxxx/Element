@@ -1,6 +1,5 @@
 import { $ } from "..";
 
-// #region $select
 export default class $select extends $ {
     name: string;
     value: any;
