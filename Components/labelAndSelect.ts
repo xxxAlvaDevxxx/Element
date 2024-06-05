@@ -1,9 +1,9 @@
 import { $, $2 } from "..";
+import { $select } from "../elementHTML";
 import { CallBack, nonBackfn } from "../types";
-import $select from "./select";
 
 // #region $LabelAnSelect
-export class $labelAndSelect extends $ {
+export default class $labelAndSelect extends $ {
   label: $2;
   select: $select;
   constructor(

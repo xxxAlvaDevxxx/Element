@@ -1,7 +1,7 @@
 import { $ } from "..";
 import { $buffer, $windowBuffer, $windowList } from "./buffer";
 import $labelAndInput from "./labelAndInput";
-import { $labelAndSelect } from "./labelAndSelect";
+import $labelAndSelect from "./labelAndSelect";
 
 export { $labelAndInput, $labelAndSelect, $windowBuffer, $windowList, $buffer };
 
