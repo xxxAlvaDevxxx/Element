@@ -23,6 +23,7 @@ import $head from "./head";
 import $body from "./body";
 import $title from "./title";
 import $aside from "./aside";
+import $table from "./table";
 
 export {
   $h1,
@@ -55,4 +56,5 @@ export {
   $body,
   $title,
   $aside,
+  $table,
 };
