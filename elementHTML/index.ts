@@ -29,6 +29,10 @@ import $td from "./td";
 import $thead from "./thead";
 import { $tbody } from "./tbody";
 import $tfoot from "./tfoot";
+import { $meta } from "./meta";
+import $link from "./link";
+import { $style } from "./style";
+import $script from "./script";
 
 export {
   $h1,
@@ -67,4 +71,8 @@ export {
   $thead,
   $tbody,
   $tfoot,
+  $meta,
+  $link,
+  $style,
+  $script,
 };
