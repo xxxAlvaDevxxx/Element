@@ -22,6 +22,7 @@ import $html from "./html";
 import $head from "./head";
 import $body from "./body";
 import $title from "./title";
+import $aside from "./aside";
 
 export {
   $h1,
@@ -53,4 +54,5 @@ export {
   $head,
   $body,
   $title,
+  $aside,
 };
