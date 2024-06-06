@@ -24,6 +24,11 @@ import $body from "./body";
 import $title from "./title";
 import $aside from "./aside";
 import $table from "./table";
+import $tr from "./tr";
+import $td from "./td";
+import $thead from "./thead";
+import { $tbody } from "./tbody";
+import $tfoot from "./tfoot";
 
 export {
   $h1,
@@ -57,4 +62,9 @@ export {
   $title,
   $aside,
   $table,
+  $tr,
+  $td,
+  $thead,
+  $tbody,
+  $tfoot,
 };
