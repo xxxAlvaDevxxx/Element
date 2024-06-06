@@ -18,6 +18,10 @@ import $ol from "./ol";
 import $li from "./li";
 import $ul from "./ul";
 import $nav from "./nav";
+import $html from "./html";
+import $head from "./head";
+import $body from "./body";
+import $title from "./title";
 
 export {
   $h1,
@@ -45,4 +49,8 @@ export {
   $li,
   $ul,
   $nav,
+  $html,
+  $head,
+  $body,
+  $title,
 };
