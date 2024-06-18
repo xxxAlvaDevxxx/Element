@@ -11,6 +11,9 @@ export class $2 {
   focus = false;
   style: StyleDeclaration;
   text: string;
+  constructor(selector?: any){
+    if (selector) this.setElement(selector)
+  }
   setElement(selector:any) {
     const element = document.querySelector(selector)
     if (!element) throw Error("Element no found");
