@@ -16,7 +16,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14' # O la versión de Node.js que estés utilizando
+        node-version: '20'
         registry-url: 'https://registry.npmjs.org/'
 
     - name: Configure npm to use the registry
@@ -25,11 +25,27 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Increment version
+      if: github.ref == 'refs/heads/main'
+      run: |
+        npm version patch --no-git-tag-version
+        git add package.json
+        git commit -m "Increment version [skip ci]"
+        git push
+
     - name: Publish to npm
       if: github.ref == 'refs/heads/main'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: npm publish --access public
+
+    - name: Increment version with tag
+      if: github.ref == 'refs/heads/dev'
+      run: |
+        npm version prerelease --preid=dev --no-git-tag-version
+        git add package.json
+        git commit -m "Increment version [skip ci]"
+        git push
 
     - name: Publish to npm with tag
       if: github.ref == 'refs/heads/dev'
