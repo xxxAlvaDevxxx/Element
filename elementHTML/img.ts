@@ -1,8 +1,8 @@
 import { $ } from "..";
 
 export default class $img extends $ {
-  constructor(src: string, attributes: object = {}) {
+  constructor(src: string, alt: string, attributes: object = {}) {
     super("img", attributes);
-    this.setAttribute({ name: "src", value: src });
+    this.setAttributes({ src: src, alt: alt });
   }
 }
