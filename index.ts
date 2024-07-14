@@ -119,7 +119,7 @@ export class $2 {
   setText(text: string) {
     if (!this.element) throw Error("element is null");
     this.text = text;
-    this.element.appendChild(document.createTextNode(text));
+    this.element.innerText = text
     return this;
   }
   event(
