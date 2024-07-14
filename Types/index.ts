@@ -6,6 +6,8 @@ export type Attribute = {
   value: string;
 };
 
+export type Target = "_self" | "_blank" | "_parent" | "_top" | "_unfencedTop" | "";
+
 export type HTMLInputTypeAttribute =
   | "number"
   | "search"
