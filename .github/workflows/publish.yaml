@@ -16,7 +16,11 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '20'
+        node-version: '14' # O la versión de Node.js que estés utilizando
+        registry-url: 'https://registry.npmjs.org/'
+
+    - name: Configure npm to use the registry
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
     - name: Install dependencies
       run: npm install
@@ -32,4 +36,3 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: npm publish --tag dev
-
