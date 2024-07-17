@@ -1,4 +1,5 @@
-import { $, $2 } from "..";
+import { $ } from "..";
+import $a from "./a";
 import $li from "./li";
 
 export default class $ul extends $ {
@@ -15,5 +16,15 @@ export default class $ul extends $ {
       this.addChilToList(text);
     });
     return this;
+  }
+  addLink(link: string, text: string) {
+    this.addChild(new $li().addChild(new $a(text, link)));
+    return this
+  }
+  addLinks(links: {text:string, link:string}[]) {
+    links.forEach(link => {
+      this.addLink(link.link,link.text)
+    });
+    return this
   }
 }
