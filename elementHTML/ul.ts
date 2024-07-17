@@ -9,5 +9,11 @@ export default class $ul extends $ {
     const child = new $li().setText(text);
     this.addChild(child);
     return this;
+  } 
+  addChildrenToList(...texts: string[]) {
+    texts.forEach((text) => {
+      this.addChilToList(text);
+    });
+    return this;
   }
 }
