@@ -122,6 +122,9 @@ export class $2 {
     this.element.innerText = text
     return this;
   }
+  addText(text: string){
+    return this.setText(this.text + " " + text)
+  }
   event(
     {
       event,
