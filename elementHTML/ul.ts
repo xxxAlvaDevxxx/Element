@@ -1,4 +1,4 @@
-import { $, $2 } from "..";
+import { $ } from "..";
 import $li from "./li";
 
 export default class $ul extends $ {
