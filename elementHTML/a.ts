@@ -1,7 +1,7 @@
 import { $TagText, Target } from "../types";
 
 export default class $a extends $TagText {
-  constructor(text: string, href: string = "", alt: string="", target: Target, attributes: object = {}) {
+  constructor(text: string, href: string = "", alt: string="", target: Target = "", attributes: object = {}) {
     super("a", attributes, text);
     if (href) this.setAttribute({name:'href', value: href})
     if (alt) this.setAttribute({name:'alt', value: alt})
