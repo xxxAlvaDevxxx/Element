@@ -1,6 +1,6 @@
 import { $, $2 } from "..";
 import { HTMLInputTypeAttribute, CallBack, nonBackfn } from "../types";
-import { $input } from "./elementHTML";
+import { $input } from "../elementHTML";
 
 // #region $labelAndInput
 export default class $labelAndInput extends $ {
